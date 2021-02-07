@@ -6,7 +6,7 @@ object Constants {
 
     const val ENCRYPTED_SHARED_PREF_NAME = "enc_shared_pref"
 
-    const val BASE_URL = "http://192:168.8.103:8001"
+    const val BASE_URL = "http://192.168.8.103:8001"
 
     val IGNORE_AUTH_URLS = listOf("/login", "register")
 }
