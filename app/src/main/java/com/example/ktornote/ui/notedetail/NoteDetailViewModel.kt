@@ -1,9 +1,11 @@
 package com.example.ktornote.ui.notedetail
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class NoteDetailViewModel @ViewModelInject constructor(
+@HiltViewModel
+class NoteDetailViewModel @Inject constructor(
 
 ) : ViewModel() {
 }
