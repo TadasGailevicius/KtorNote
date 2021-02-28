@@ -26,6 +26,9 @@
         android:id="@+id/noteDetailFragment"
         android:name="com.example.ktornote.ui.notedetail.NoteDetailFragment"
         android:label="NoteDetailFragment" >
+        <action
+            android:id="@+id/action_noteDetailFragment_to_addEditNoteFragment"
+            app:destination="@id/addEditNoteFragment" />
         <argument
             android:name="id"
             app:argType="string" />
