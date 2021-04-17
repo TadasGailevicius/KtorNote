@@ -1,21 +1,26 @@
 package com.example.ktornote.adapters
 
 import android.graphics.Color
-import android.view.*
+import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ktornote.R
 import com.example.ktornote.data.local.entities.Note
 import kotlinx.android.synthetic.main.item_note.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     inner class NoteViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Note>(){
+    private val diffCallback = object : DiffUtil.ItemCallback<Note>() {
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
             return oldItem.id == newItem.id
         }
@@ -41,14 +46,17 @@ class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
                         false
                 )
         )
+    }
 
+    override fun getItemCount(): Int {
+        return notes.size
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
         holder.itemView.apply {
             tvTitle.text = note.title
-            if(!note.isSynced){
+            if(!note.isSynced) {
                 ivSynced.setImageResource(R.drawable.ic_cross)
                 tvSynced.text = "Not Synced"
             } else {
@@ -64,11 +72,11 @@ class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
             drawable?.let {
                 val wrappedDrawable = DrawableCompat.wrap(it)
                 val color = Color.parseColor("#${note.color}")
-                DrawableCompat.setTint(wrappedDrawable,color)
+                DrawableCompat.setTint(wrappedDrawable, color)
                 viewNoteColor.background = wrappedDrawable
             }
 
-            setOnItemClickListener {
+            setOnClickListener {
                 onItemClickListener?.let { click ->
                     click(note)
                 }
@@ -76,11 +84,7 @@ class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int {
-        return notes.size
-    }
-
-    fun setOnItemClickListener(onItemClick: (Note) -> Unit){
+    fun setOnItemClickListener(onItemClick: (Note) -> Unit) {
         this.onItemClickListener = onItemClick
     }
 }
